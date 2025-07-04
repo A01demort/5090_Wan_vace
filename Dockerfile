@@ -63,7 +63,6 @@ c.NotebookApp.terminado_settings = {'shell_command': ['/bin/bash']}" \
 > /root/.jupyter/jupyter_notebook_config.py
 
 
-
 # 커스텀 노드 및 의존성 설치 통합
 RUN echo '📁 커스텀 노드 및 의존성 설치 시작' && \
     mkdir -p /workspace/ComfyUI/custom_nodes && \
@@ -88,34 +87,26 @@ RUN echo '📁 커스텀 노드 및 의존성 설치 시작' && \
     git clone https://github.com/ssitu/ComfyUI_UltimateSDUpscale.git || echo '⚠️ Upscale 실패' && \
     git clone https://github.com/risunobushi/comfyUI_FrequencySeparation_RGB-HSV.git || echo '⚠️ Frequency 실패' && \
     git clone https://github.com/silveroxides/ComfyUI_bnb_nf4_fp4_Loaders.git || echo '⚠️ NF4 노드 실패' && \
-    git clone https://github.com/kijai/ComfyUI-FramePackWrapper.git || echo '⚠️ FramePackWrapper 실패' && \ 
+    git clone https://github.com/kijai/ComfyUI-FramePackWrapper.git || echo '⚠️ FramePackWrapper 실패' && \
     git clone https://github.com/pollockjj/ComfyUI-MultiGPU.git || echo '⚠️ MultiGPU 실패' && \
     git clone https://github.com/Fannovel16/comfyui_controlnet_aux.git || echo '⚠️ controlnet_aux 실패' && \
     git clone https://github.com/chflame163/ComfyUI_LayerStyle.git || echo '⚠️ ComfyUI_LayerStyle 설치 실패' && \
-
-    \
     echo '📦 segment-anything 설치' && \
     git clone https://github.com/facebookresearch/segment-anything.git /workspace/segment-anything || echo '⚠️ segment-anything 실패' && \
     pip install -e /workspace/segment-anything || echo '⚠️ segment-anything pip 설치 실패' && \
-    \
     echo '📦 ReActor ONNX 모델 설치' && \
     mkdir -p /workspace/ComfyUI/models/insightface && \
-    wget -O /workspace/ComfyUI/models/insightface/inswapper_128.onnx \
-    https://huggingface.co/datasets/Gourieff/ReActor/resolve/main/models/inswapper_128.onnx || echo '⚠️ ONNX 다운로드 실패' && \
-    \
+    wget -O /workspace/ComfyUI/models/insightface/inswapper_128.onnx https://huggingface.co/datasets/Gourieff/ReActor/resolve/main/models/inswapper_128.onnx || echo '⚠️ ONNX 다운로드 실패' && \
     echo '📦 파이썬 패키지 설치' && \
     pip install --no-cache-dir \
         GitPython onnx onnxruntime opencv-python-headless tqdm requests \
-        scikit-image piexif packaging transformers accelerate peft sentencepiece \
-        protobuf scipy einops pandas matplotlib imageio[ffmpeg] pyzbar pillow numba \
-        gguf diffusers insightface dill || echo '⚠️ 일부 pip 설치 실패' && \
-    pip install facelib==0.2.2 mtcnn==0.1.1 || echo '⚠️ facelib 실패' && \
-    pip install facexlib basicsr gfpgan realesrgan || echo '⚠️ facexlib 실패' && \
-    pip install timm || echo '⚠️ timm 실패' && \
-    pip install ultralytics || echo '⚠️ ultralytics 실패' && \
-    pip install ftfy || echo '⚠️ ftfy 실패' && \
-    pip install bitsandbytes xformers || echo '⚠️ bitsandbytes 또는 xformers 설치 실패' && \
-    pip install sageattention || echo '⚠️ sageattention 설치 실패'
+        scikit-image piexif packaging protobuf scipy einops pandas matplotlib imageio[ffmpeg] pyzbar pillow numba \
+        gguf dill insightface ftfy ultralytics timm \
+        facelib==0.2.2 mtcnn==0.1.1 facexlib basicsr gfpgan realesrgan \
+        diffusers==0.24.0 transformers==4.39.3 huggingface_hub==0.20.3 peft==0.7.1 bitsandbytes==0.42.0.post2 xformers || echo '⚠️ 일부 pip 설치 실패' && \
+    echo '📦 sageattention 1.0.6 설치 중...' && \
+    pip install sageattention==1.0.6 || echo '⚠️ sageattention 설치 실패'
+
 
 
 # A1 폴더 생성 후 자동 커스텀 노드 설치 스크립트 복사
