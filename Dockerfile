@@ -108,7 +108,6 @@ RUN echo '📁 커스텀 노드 및 의존성 설치 시작' && \
     pip install sageattention==1.0.6 || echo '⚠️ sageattention 설치 실패'
 
 
-
 # A1 폴더 생성 후 자동 커스텀 노드 설치 스크립트 복사
 RUN mkdir -p /workspace/A1
 COPY init_or_check_nodes.sh /workspace/A1/init_or_check_nodes.sh
@@ -121,8 +120,6 @@ RUN chmod +x /workspace/A1/Wan2.1_Vace_a1.sh
 # FusionX_14B_a1.sh 스크립트 복사 및 실행 권한 설정
 COPY FusionX_14B_a1.sh /workspace/A1/FusionX_14B_a1.sh
 RUN chmod +x /workspace/A1/FusionX_14B_a1.sh
-
-
 
 
 # 볼륨 마운트
